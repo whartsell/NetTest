@@ -27,14 +27,14 @@ namespace Test_Sender
             PortTextBox.Text = defaultPort.ToString();
             AddressTextBox.Text = defaultAddress;
             isSending = false;
-            tokenSource = new CancellationTokenSource();
+           
             setButtonsState();
         }
 
         private void StartButton_Click(object sender, EventArgs e)
         {
-            
-                socket = new Socket(AddressFamily.InterNetwork, SocketType.Dgram, ProtocolType.Udp);
+            tokenSource = new CancellationTokenSource();
+            socket = new Socket(AddressFamily.InterNetwork, SocketType.Dgram, ProtocolType.Udp);
                 IPAddress host = IPAddress.Parse(AddressTextBox.Text);
                 int port;
                 if (!Int32.TryParse(PortTextBox.Text, out port))
@@ -44,7 +44,7 @@ namespace Test_Sender
 
                 }
                 endPoint = new IPEndPoint(host, port);
-            isSending = true;
+                isSending = true;
                 setButtonsState();
                 Task.Run(() => startSending(tokenSource.Token), tokenSource.Token);
         }
@@ -69,6 +69,7 @@ namespace Test_Sender
             socket.Dispose();
             isSending = false;
             setButtonsState();
+            
         }
 
         private void setButtonsState()

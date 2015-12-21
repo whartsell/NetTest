@@ -95,8 +95,6 @@ namespace shared
                         socketAsyncEventArgs.SetBuffer(new byte[256],0,256);
                         socketAsyncEventArgs.RemoteEndPoint = senderRemote;
                         socketAsyncEventArgs.Completed += SocketAsyncEventArgs_Completed;
-                        //byte[] message = new byte[256];
-                        //int byteCount = listener.ReceiveFrom(message, ref senderRemote);
                         receivePending = listener.ReceiveFromAsync(socketAsyncEventArgs);
                         if (!receivePending)
                         {
@@ -124,7 +122,6 @@ namespace shared
             args.Sender = e.RemoteEndPoint;
             OnMessageReceived(args);
             receivePending = false;
-            //throw new NotImplementedException();
         }
     }
 
